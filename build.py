@@ -3,14 +3,16 @@ from flask import request
 from flask import json
 import subprocess
 import glob
-import sre
+import re
 import os
 import shutil
+import sys
 
 SKOLENI_DIR='/home/skoleni/'
 WORKSHOPS=(
         "vugtk",
-        "geopython",
+        "geopython-zacatecnik",
+        "geopython-pokrocily",
         "grass-gis-zacatecnik",
         "postgis-zacatecnik",
         "postgis-pokrocily",
@@ -27,7 +29,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return 'Hello World!\n'
 
 @app.route('/build', methods=['POST'])
 def build():
@@ -39,7 +41,7 @@ def build():
 
 
 def _build_master(data):
-    repository = data['name']
+    repository = data['repository']['name']
 
     def build_repo(name):
         curdir = os.path.abspath('./')
@@ -74,7 +76,7 @@ def _update_pdf():
             os.path.join('_build/latex/*.pdf', 'html/*.pdf'))[0]
     )
     shutil.copy(file_name, 'html')
-    target_file_name = sre.sub('-([0-9]\.).*', '.pdf', file_name)
+    target_file_name = re.sub('-([0-9]\.).*', '.pdf', file_name)
     target = os.path.join('html', target_file_name)
     source = os.path.join('html', file_name)
     if os.path.islink(target):
