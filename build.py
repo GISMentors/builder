@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import json
+from flask import make_response
 import subprocess
 import glob
 import re
@@ -8,19 +9,23 @@ import os
 import shutil
 import sys
 
-SKOLENI_DIR='/home/skoleni/'
+SKOLENI_DIR='/var/www/opengeolabs/gismentors/skoleni/'
 WORKSHOPS=(
-        "vugtk",
-        "geopython-zacatecnik",
-        "geopython-pokrocily",
-        "grass-gis-zacatecnik",
-        "postgis-zacatecnik",
-        "postgis-pokrocily",
-        "otevrena-geodata",
-        "open-source-gis",
-        "grass-gis-pokrocily",
-        "qgis-zacatecnik",
-        "qgis-pokrocily"
+    "geopython-english",
+    "geopython-pokrocily",
+    "geopython-zacatecnik",
+    "geoserver-zacatecnik",
+    "grass-gis-pokrocily",
+    "grass-gis-zacatecnik",
+    "isprs-summer-school-2016",
+    "open-source-gis",
+    "otevrena-geodata",
+    "postgis-pokrocily",
+    "postgis-zacatecnik",
+    "qgis-pokrocily",
+    "qgis-zacatecnik",
+    "sphinx-template",
+    "vugtk"
 )
 
 SPHINX = 'sphinx-template'
@@ -31,15 +36,16 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!\n'
 
+
 @app.route('/build', methods=['POST'])
 def build():
     data = json.loads(request.get_data())
     branch = _get_branch(data)
 
     if branch == 'master':
-        _build_master(data)
+    	return _build_master(data)
 
-
+    
 def _build_master(data):
     repository = data['repository']['name']
 
@@ -61,27 +67,24 @@ def _build_master(data):
         for workshop in WORKSHOPS:
             build_repo(workshop)
 
+    resp = make_response('{"status":"success"}', 200)
+    resp.headers['Content-type'] = 'application/json'
+    return resp
+
 
 def _update_git():
     subprocess.call(["git", "pull"])
+
 
 def _update_html():
     subprocess.call(["make", "clean"])
     subprocess.call(["make", "html"])
 
+
 def _update_pdf():
     subprocess.call(["make", "latexpdf"])
-    file_name = os.path.basename(
-        glob.glob(
-            os.path.join('_build/latex/*.pdf', 'html/*.pdf'))[0]
-    )
-    shutil.copy(file_name, 'html')
-    target_file_name = re.sub('-([0-9]\.).*', '.pdf', file_name)
-    target = os.path.join('html', target_file_name)
-    source = os.path.join('html', file_name)
-    if os.path.islink(target):
-        os.unlink(target)
-    os.symlink(source, target)
+    file_name = glob.glob('_build/latex/*.pdf')[0]
+    shutil.copy(file_name, '_build/html')
 
 
 def _get_branch(data):
@@ -90,4 +93,3 @@ def _get_branch(data):
 
 if __name__ == '__main__':
     app.run()
-
