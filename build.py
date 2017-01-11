@@ -13,6 +13,7 @@ import sys
 
 SKOLENI_DIR='/var/www/opengeolabs/gismentors/skoleni/'
 WORKSHOPS=(
+    "geonetwork-zacatecnik",
     "geopython-english",
     "geopython-pokrocily",
     "geopython-zacatecnik",
@@ -57,7 +58,8 @@ def _build_master(data):
 
         _update_git()
         _update_html()
-        _update_pdf()
+        # _update_pdf()
+	_update_rights()
 
         os.chdir(curdir)
 
@@ -88,6 +90,8 @@ def _update_pdf():
     file_name = glob.glob('_build/latex/*.pdf')[0]
     shutil.copy(file_name, '_build/html')
 
+def _update_rights():
+    subprocess.call(['chmod', '-R', 'a+w', '_build'])
 
 def _get_branch(data):
     ref = data['ref']
