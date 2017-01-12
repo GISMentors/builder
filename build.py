@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 from flask import Flask
 from flask import request
 from flask import json
@@ -55,12 +57,14 @@ def _build_master(data):
     repository = data['repository']['name']
 
     def build_repo(name):
+        print("{sep}\nBuilding {repo}\n{sep}\n".format(repo=name, sep='*' * 80),
+              file=sys.stderr)
         curdir = os.path.abspath('./')
         os.chdir(os.path.join(SKOLENI_DIR, name))
 
         _update_git()
         _update_html()
-        #_update_pdf()
+        _update_pdf()
 
         os.chdir(curdir)
 
@@ -88,9 +92,12 @@ def _update_html():
 
 def _update_pdf():
     subprocess.call(["make", "latexpdf"])
-    file_name = glob.glob('_build/latex/*.pdf')[0]
-    shutil.copy(file_name, '_build/html')
-
+    file_name = max(glob.iglob('_build/latex/*.pdf'), key=os.path.getctime)
+    dest_file = '{base}.{ext}'.format(
+        base='-'.join(os.path.basename(file_name).split('-', -1)[:-1]),
+        ext='pdf'
+    )
+    shutil.copy(file_name, '_build/html/{}'.format(dest_file))
 
 def _get_branch(data):
     ref = data['ref']
