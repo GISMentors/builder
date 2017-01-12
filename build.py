@@ -1,4 +1,4 @@
-#!/var/www/opengeolabs/gismentors/build-env/bin/python
+#!/usr/bin/env python
 
 from flask import Flask
 from flask import request
@@ -10,6 +10,8 @@ import re
 import os
 import shutil
 import sys
+
+os.environ['PYTHONPATH'] = '/var/www/opengeolabs/gismentors/build-env/lib/python2.7/site-packages'
 
 SKOLENI_DIR='/var/www/opengeolabs/gismentors/skoleni/'
 WORKSHOPS=(
@@ -58,8 +60,7 @@ def _build_master(data):
 
         _update_git()
         _update_html()
-        # _update_pdf()
-	_update_rights()
+        #_update_pdf()
 
         os.chdir(curdir)
 
@@ -90,8 +91,6 @@ def _update_pdf():
     file_name = glob.glob('_build/latex/*.pdf')[0]
     shutil.copy(file_name, '_build/html')
 
-def _update_rights():
-    subprocess.call(['chmod', '-R', 'a+w', '_build'])
 
 def _get_branch(data):
     ref = data['ref']
