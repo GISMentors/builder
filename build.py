@@ -35,6 +35,12 @@ WORKSHOPS=(
     "vugtk"
 )
 
+WORKSHOPSPDF=(
+    "grass-gis-zacatecnik",
+    "otevrena-geodata",
+    "qgis-zacatecnik",
+)
+
 SPHINX = 'sphinx-template'
 
 app = Flask(__name__)
@@ -64,7 +70,8 @@ def _build_master(data):
 
         _update_git()
         _update_html()
-        _update_pdf()
+        if repository in WORKSHOPSPDF:
+            _update_pdf()
 
         os.chdir(curdir)
 
