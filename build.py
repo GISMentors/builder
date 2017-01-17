@@ -25,6 +25,7 @@ WORKSHOPS=(
     "grass-gis-pokrocily",
     "grass-gis-zacatecnik",
     "isprs-summer-school-2016",
+    "mapserver-zacatecnik",
     "open-source-gis",
     "otevrena-geodata",
     "postgis-pokrocily",
