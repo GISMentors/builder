@@ -78,8 +78,8 @@ def _build_master(data):
     if repository in WORKSHOPS:
         build_repo(repository)
 
-
     elif repository == SPHINX:
+        _update_git_template()
         for workshop in WORKSHOPS:
             build_repo(workshop)
 
@@ -90,6 +90,13 @@ def _build_master(data):
 
 def _update_git():
     subprocess.call(["git", "pull"])
+
+
+def _update_git_template():
+    curdir = os.path.abspath('./')
+    os.chdir(os.path.join(SKOLENI_DIR, SPHINX))
+    _update_git()
+    os.chdir(curdir)
 
 
 def _update_html():
