@@ -32,7 +32,6 @@ WORKSHOPS=(
     "postgis-zacatecnik",
     "qgis-pokrocily",
     "qgis-zacatecnik",
-    "sphinx-template",
     "vugtk"
 )
 
