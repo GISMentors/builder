@@ -1,2 +1,2 @@
 # builder
-Building script for our materialas
+Building script for GISMentors materials
