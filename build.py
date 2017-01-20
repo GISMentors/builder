@@ -74,10 +74,10 @@ def _build_master(data):
         os.chdir(os.path.join(SKOLENI_DIR, name))
 
         _update_git()
-        branch = 'en' if repository in WORKSHOPSEN else 'master'
+        branch = 'en' if name in WORKSHOPSEN else 'master'
         _update_git_template(branch)
         _update_html()
-        if repository in WORKSHOPSPDF:
+        if name in WORKSHOPSPDF:
             _update_pdf()
 
         os.chdir(curdir)
