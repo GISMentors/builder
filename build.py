@@ -90,7 +90,7 @@ def _build_master(data):
         for workshop in WORKSHOPS:
             build_repo(workshop)
 
-    print("{sep}\nBuilder finised{sep}\n".format(sep='*' * 80),
+    print("{sep}\nBuilder finished\n{sep}\n".format(sep='*' * 80),
           file=sys.stderr)
 
     resp = make_response('{"status":"success"}', 200)
