@@ -13,7 +13,8 @@ import os
 import shutil
 import sys
 
-os.environ['PYTHONPATH'] = '/var/www/opengeolabs/gismentors/build-env/lib/python2.7/site-packages'
+os.environ['PYTHONPATH'] = '/var/www/opengeolabs/gismentors/build-env/local/lib/python2.7/site-packages'
+os.environ['PYTHONPATH'] += ':/var/www/opengeolabs/gismentors/build-env/lib/python2.7/site-packages'
 
 SKOLENI_DIR='/var/www/opengeolabs/gismentors/skoleni/'
 WORKSHOPS=(
@@ -41,6 +42,7 @@ WORKSHOPSEN=(
 )
 
 WORKSHOPSPDF=(
+    "geopython-zacatecnik",
     "grass-gis-zacatecnik",
     "otevrena-geodata",
     "qgis-zacatecnik",
