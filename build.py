@@ -42,7 +42,7 @@ WORKSHOPSEN=(
 )
 
 WORKSHOPSPDF=(
-    "geopython-zacatecnik",
+    "postgis-zacatecnik",
     "grass-gis-zacatecnik",
     "otevrena-geodata",
     "qgis-zacatecnik",
