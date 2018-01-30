@@ -25,6 +25,7 @@ WORKSHOPS=(
     "geoserver-zacatecnik",
     "grass-gis-pokrocily",
     "grass-gis-zacatecnik",
+    "grass-gis-workshop-jena-2018",
     "isprs-summer-school-2016",
     "mapserver-zacatecnik",
     "open-source-gis",
@@ -39,6 +40,7 @@ WORKSHOPS=(
 WORKSHOPSEN=(
     "geopython-english",
     "isprs-summer-school-2016",
+    "grass-gis-workshop-jena-2018",
 )
 
 WORKSHOPSPDF=(
@@ -46,6 +48,7 @@ WORKSHOPSPDF=(
     "grass-gis-zacatecnik",
     "otevrena-geodata",
     "qgis-zacatecnik",
+    "qgis-pokrocily",
 )
 
 SPHINX = 'sphinx-template'
