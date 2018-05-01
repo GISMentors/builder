@@ -26,6 +26,7 @@ WORKSHOPS=(
     "grass-gis-pokrocily",
     "grass-gis-zacatecnik",
     "grass-gis-workshop-jena-2018",
+    "grass-gis-irsae-winter-course-2018",
     "isprs-summer-school-2016",
     "mapserver-zacatecnik",
     "open-source-gis",
