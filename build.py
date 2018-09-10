@@ -42,6 +42,7 @@ WORKSHOPSEN=(
     "geopython-english",
     "isprs-summer-school-2016",
     "grass-gis-workshop-jena-2018",
+    "grass-gis-irsae-winter-course-2018",
 )
 
 WORKSHOPSPDF=(
