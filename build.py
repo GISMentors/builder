@@ -18,6 +18,7 @@ os.environ['PYTHONPATH'] += ':/var/www/opengeolabs/gismentors/build-env/lib/pyth
 
 SKOLENI_DIR='/var/www/opengeolabs/gismentors/skoleni/'
 WORKSHOPS=(
+    "basic-data-processing-workshop",
     "geonetwork-zacatecnik",
     "geopython-english",
     "geopython-pokrocily",
