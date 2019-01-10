@@ -54,6 +54,10 @@ WORKSHOPSPDF=(
     "qgis-pokrocily",
 )
 
+BRANCHES = {
+    "qgis-zacatecnik" : ['release_3_4']
+}
+
 SPHINX = 'sphinx-template'
 
 app = Flask(__name__)
@@ -66,24 +70,35 @@ def hello_world():
 @app.route('/build', methods=['POST'])
 def build():
     data = json.loads(request.get_data())
+    repository = data['repository']['name']
     branch = _get_branch(data)
 
     if branch == 'master':
-    	return _build_master(data)
+        _build_branch(repository)
+    elif repository in BRANCHES and branch in BRANCHES[repository]:
+        _build_branch(repository, branch)
 
-    
-def _build_master(data):
-    repository = data['repository']['name']
+    resp = make_response('{"status":"success"}', 200)
+    resp.headers['Content-type'] = 'application/json'
+    return resp
 
-    def build_repo(name):
-        print("{sep}\nBuilding {repo}\n{sep}\n".format(repo=name, sep='*' * 80),
+
+def _build_branch(repository, branch='master'):
+
+    def build_repo(name, branch):
+        print("{sep}\nBuilding {repo} ({branch})\n{sep}\n".format(repo=name, sep='*' * 80, branch=branch),
               file=sys.stderr)
         curdir = os.path.abspath('./')
-        os.chdir(os.path.join(SKOLENI_DIR, name))
+        repo_dir = name
+        if branch != 'master':
+            repo_dir += '_{}'.format(branch)
+        os.chdir(os.path.join(SKOLENI_DIR, repo_dir))
 
         _update_git()
-        branch = 'en' if name in WORKSHOPSEN else 'master'
-        _update_git_template(branch)
+
+        template_branch = 'en' if name in WORKSHOPSEN else 'master'
+        _update_git_template(template_branch)
+
         _update_html()
         if name in WORKSHOPSPDF:
             _update_pdf()
@@ -91,24 +106,20 @@ def _build_master(data):
         os.chdir(curdir)
 
     if repository in WORKSHOPS:
-        build_repo(repository)
+        build_repo(repository, branch)
 
     elif repository == SPHINX:
         _update_git_template()
         for workshop in WORKSHOPS:
-            build_repo(workshop)
+            build_repo(workshop, branch)
 
     print("{sep}\nBuilder finished\n{sep}\n".format(sep='*' * 80),
           file=sys.stderr)
 
-    resp = make_response('{"status":"success"}', 200)
-    resp.headers['Content-type'] = 'application/json'
-    return resp
-
 
 def _update_git():
     subprocess.call(["git", "pull"])
-
+    print("{}: UPDATED".format(os.path.abspath('./')))
 
 def _update_git_template(branch='master'):
     curdir = os.path.abspath('./')
