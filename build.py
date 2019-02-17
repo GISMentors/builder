@@ -55,7 +55,7 @@ WORKSHOPSPDF=(
 )
 
 BRANCHES = {
-    "qgis-zacatecnik" : ['release_3_4']
+    "qgis-zacatecnik" : ['release_2_18', 'release_2_14']
 }
 
 SPHINX = 'sphinx-template'
