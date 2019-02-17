@@ -75,6 +75,8 @@ def build():
 
     if branch == 'master':
         _build_branch(repository)
+        if repository in BRANCHES:
+            _restore_symlinks(repository)
     elif repository in BRANCHES and branch in BRANCHES[repository]:
         _build_branch(repository, branch)
 
@@ -82,6 +84,16 @@ def build():
     resp.headers['Content-type'] = 'application/json'
     return resp
 
+
+def _restore_symlinks(repo_dir):
+    curdir = os.path.abspath('./')
+    os.chdir(os.path.join(SKOLENI_DIR, repo_dir, "_build", "html"))
+    for branch in BRANCHES[repo_dir]:
+        version = branch.split('_', 1)[1].replace('_', '.')
+        os.symlink(os.path.join(SKOLENI_DIR, '{}_{}'.format(repo_dir, branch), '_build', 'html'),
+                   version
+        )
+    os.chdir(curdir)
 
 def _build_branch(repository, branch='master'):
 
