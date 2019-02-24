@@ -89,10 +89,11 @@ def _restore_symlinks(repo_dir):
     curdir = os.path.abspath('./')
     os.chdir(os.path.join(SKOLENI_DIR, repo_dir, "_build", "html"))
     for branch in BRANCHES[repo_dir]:
-        version = branch.split('_', 1)[1].replace('_', '.')
-        os.symlink(os.path.join(SKOLENI_DIR, '{}_{}'.format(repo_dir, branch), '_build', 'html'),
-                   version
-        )
+        source = os.path.join(SKOLENI_DIR, '{}_{}'.format(repo_dir, branch), '_build', 'html')
+        target = branch.split('_', 1)[1].replace('_', '.')
+        if not os.path.exists(target):
+            print ("Restoring symlink '{}' -> '{}'".format(source, target))
+            os.symlink(source, target)
     os.chdir(curdir)
 
 def _build_branch(repository, branch='master'):
@@ -113,7 +114,8 @@ def _build_branch(repository, branch='master'):
 
         _update_html()
         if name in WORKSHOPSPDF:
-            _update_pdf()
+            # _update_pdf()
+            pass
 
         os.chdir(curdir)
 
