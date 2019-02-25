@@ -75,8 +75,6 @@ def build():
 
     if branch == 'master':
         _build_branch(repository)
-        if repository in BRANCHES:
-            _restore_symlinks(repository)
     elif repository in BRANCHES and branch in BRANCHES[repository]:
         _build_branch(repository, branch)
 
@@ -113,9 +111,12 @@ def _build_branch(repository, branch='master'):
         _update_git_template(template_branch)
 
         _update_html()
+
+        if name in BRANCHES:
+            _restore_symlinks(name)
+
         if name in WORKSHOPSPDF:
-            # _update_pdf()
-            pass
+            _update_pdf()
 
         os.chdir(curdir)
 
