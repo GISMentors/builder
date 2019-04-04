@@ -119,6 +119,13 @@ def _build_branch(repository, branch='master'):
         if name in WORKSHOPSPDF:
             _update_pdf()
 
+        # publish build
+        publish_dir = os.path.join(SKOLENI_DIR, '..', name)
+        print("PUBLISH DIR: {}".format(publish_dir))
+        if os.path.exists(publish_dir):
+            shutil.rmtree(publish_dir)
+        shutil.copytree("_build/html", publish_dir)
+
         os.chdir(curdir)
 
     if repository in WORKSHOPS:
