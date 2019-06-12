@@ -161,7 +161,10 @@ def _update_html():
 
 def _update_pdf():
     subprocess.call(["make", "latexpdf"])
-    file_name = max(glob.iglob('_build/latex/*.pdf'), key=os.path.getctime)
+    try:
+        file_name = max(glob.iglob('_build/latex/*.pdf'), key=os.path.getctime)
+    except ValueError:
+        return
     dest_file = '{base}.{ext}'.format(
         base='-'.join(os.path.basename(file_name).split('-', -1)[:-1]),
         ext='pdf'
