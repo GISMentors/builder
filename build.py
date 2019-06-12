@@ -37,6 +37,7 @@ WORKSHOPS=(
     "qgis-pokrocily",
     "qgis-zacatecnik",
     "vugtk",
+    "yungo-plugins",
 )
 
 WORKSHOPSEN=(
