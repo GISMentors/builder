@@ -26,7 +26,7 @@ WORKSHOPS=(
     "geoserver-zacatecnik",
     "grass-gis-pokrocily",
     "grass-gis-zacatecnik",
-    "grass-gis-workshop-jena-2018",
+    "grass-gis-workshop-jena",
     "grass-gis-irsae-winter-course-2018",
     "isprs-summer-school-2016",
     "mapserver-zacatecnik",
@@ -36,16 +36,16 @@ WORKSHOPS=(
     "postgis-zacatecnik",
     "qgis-pokrocily",
     "qgis-zacatecnik",
+    "qgis-plugins",
     "vugtk",
-    "yungo-plugins",
 )
 
 WORKSHOPSEN=(
     "geopython-english",
     "isprs-summer-school-2016",
-    "grass-gis-workshop-jena-2018",
+    "grass-gis-workshop-jena",
     "grass-gis-irsae-winter-course-2018",
-    "yungo-plugins",
+    "qgis-plugins",
 )
 
 WORKSHOPSPDF=(
